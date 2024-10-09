@@ -9,3 +9,6 @@ PIN OUT. GPIO schema.
 
 #### Lesson 3
 PIN IN
+
+#### Lesson 4
+C. int/if/for
