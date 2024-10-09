@@ -1,2 +1,2 @@
 # STM32_Lessons
-## Code for all course lessons
+### Code for all course lessons
