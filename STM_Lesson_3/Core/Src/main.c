@@ -96,24 +96,36 @@ int main(void)
   {
 //	  while (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9) == GPIO_PIN_RESET)
 //	  while (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9) == RESET)
-	  while (!HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9))
-	  {
-		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
-		  HAL_Delay(80);
-	  }
+//	  while (!HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9))
+//	  {
+//		  HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_5);
+//		  HAL_Delay(80);
+//	  }
 
 //	  while (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8) == GPIO_PIN_SET)
 //	  while (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8) == SET)
 //	  while (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8) == 1)
 //	  while (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8) != 0)
-	  while (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8))
-	  {
-		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_10 | GPIO_PIN_8);
-		  HAL_Delay(200);
-	  }
+//	  while (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8))
+//	  {
+//		  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_10 | GPIO_PIN_8);
+//		  HAL_Delay(200);
+//	  }
+//
+//	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+//	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8 | GPIO_PIN_10, GPIO_PIN_RESET);
 
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
-	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8 | GPIO_PIN_10, GPIO_PIN_RESET);
+//	  if ((!HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9)) || (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8)))
+	  if ((!HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_9)) && (HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8)))
+	  {
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8 | GPIO_PIN_10, GPIO_PIN_SET);
+	  }
+	  else
+	  {
+		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
+		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8 | GPIO_PIN_10, GPIO_PIN_RESET);
+	  }
 
     /* USER CODE END WHILE */
 
@@ -202,6 +214,18 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PB8 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PB9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_9;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
