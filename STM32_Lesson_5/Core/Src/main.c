@@ -21,6 +21,11 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+void ledsOff (void);
+void ledsOn (void);
+void ledsLeftRight(void);
+void ledsRightLeft(void);
+void ledsValue(int i);
 
 /* USER CODE END Includes */
 
@@ -31,6 +36,10 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
+#define LED_RED GPIOA, GPIO_PIN_10
+#define LED_BLUE GPIOB, GPIO_PIN_3
+#define LED_GREEN GPIOB, GPIO_PIN_5
 
 /* USER CODE END PD */
 
@@ -94,64 +103,22 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  int i = 0;
-
-//	  while (i++ < 6)  // Blink 6 times
-////	  while (++i < 6)  // Blink 5 times
-//	  {
-//		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-//		  HAL_Delay(300);
-//		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-//		  HAL_Delay(300);
+//	  ledsLeftRight();
+//
+//	  for (int i = 0; i < 3; i++) {
+//		  ledsOff();
+//		  HAL_Delay(1200);
+//		  ledsOn();
+//		  HAL_Delay(1200);
 //	  }
+//
+//	  ledsRightLeft();
 
-//	  for (int i=0; i < 10; i++)
-//	  {
-//		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-//		  HAL_Delay(300);
-//		  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-//		  HAL_Delay(300);
-//	  }
-
-	  for (int i=1; i <= 3; i++)
-	  {
-		  if (i == 1)
-		  {
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-		  }
-		  else if (i==2)
-		  {
-			  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
-		  }
-		  else if (i == 3)
-		  {
-			  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
-		  }
-
-		  HAL_Delay(300);
-	  }
-
-	  for (int i=3; i >= 1; i--)
-	  {
-		  if (i == 1)
-		  {
-			  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-		  }
-		  else if (i==2)
-		  {
-			  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_RESET);
-		  }
-		  else if (i == 3)
-		  {
-			  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_RESET);
-		  }
-
-		  HAL_Delay(300);
-	  }
+	  ledsValue(2);
+	  HAL_Delay(1000);
+	  ledsOff();
 
 
-//	  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-//	  HAL_Delay(1000);
 
     /* USER CODE END WHILE */
 
@@ -241,6 +208,56 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void ledsOff (void){
+	HAL_GPIO_WritePin(LED_RED, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(LED_BLUE, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(LED_GREEN, GPIO_PIN_RESET);
+}
+
+void ledsOn (void){
+	HAL_GPIO_WritePin(LED_RED, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(LED_BLUE, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(LED_GREEN, GPIO_PIN_SET);
+}
+
+void ledsLeftRight(void){
+	  HAL_GPIO_WritePin(LED_RED, GPIO_PIN_SET);
+	  HAL_Delay(300);
+	  HAL_GPIO_WritePin(LED_BLUE, GPIO_PIN_SET);
+	  HAL_Delay(300);
+	  HAL_GPIO_WritePin(LED_GREEN, GPIO_PIN_SET);
+	  HAL_Delay(300);
+}
+
+void ledsRightLeft(void){
+	HAL_GPIO_WritePin(LED_GREEN, GPIO_PIN_RESET);
+	HAL_Delay(300);
+	HAL_GPIO_WritePin(LED_BLUE, GPIO_PIN_RESET);
+	HAL_Delay(300);
+	HAL_GPIO_WritePin(LED_RED, GPIO_PIN_RESET);
+	HAL_Delay(300);
+}
+
+void ledsValue(int i){
+	ledsOff();
+	if (i == 0){
+		ledsOff();
+	} else if (i == 1){
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+	} else if (i == 2){
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+	} else if (i == 3){
+		HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_3, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, GPIO_PIN_SET);
+	}
+	HAL_Delay(300);
+}
+
+int plus (void){
+	return 5;
+}
 
 /* USER CODE END 4 */
 
