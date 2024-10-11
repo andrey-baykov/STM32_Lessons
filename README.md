@@ -12,3 +12,6 @@ PIN IN
 
 #### Lesson 4
 C. int/if/for
+
+#### Lesson 5
+Functions
