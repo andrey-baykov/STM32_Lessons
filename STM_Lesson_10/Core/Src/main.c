@@ -57,6 +57,8 @@
 
 #define TIME_DELAY 1000
 
+int count = 0;
+int num_4, num_3, num_2, num_1 = 0;
 
 /* USER CODE END PD */
 
@@ -82,11 +84,44 @@ void showFullNumber(int num);
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 {
-	if (htim -> Instance == TIM6)
+
+	if (++count > 4) count = 1;
+
+	if(count == 4)
 	{
-//		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_0);
+		showNumber(num_4);
+		RAZR_1_OFF;
+		RAZR_2_OFF;
+		RAZR_3_OFF;
+		RAZR_4_ON;
 
 	}
+
+	if(count == 3)
+	{
+		showNumber(num_3);
+		RAZR_1_OFF;
+		RAZR_2_OFF;
+		RAZR_3_ON;
+		RAZR_4_OFF;
+	}
+	if(count == 2)
+	{
+		showNumber(num_2);
+		RAZR_1_OFF;
+		RAZR_2_ON;
+		RAZR_3_OFF;
+		RAZR_4_OFF;
+	}
+	if(count == 1)
+	{
+		showNumber(num_1);
+		RAZR_1_ON;
+		RAZR_2_OFF;
+		RAZR_3_OFF;
+		RAZR_4_OFF;
+	}
+//		HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_0);
 
 }
 /* USER CODE END PFP */
@@ -147,7 +182,7 @@ int main(void)
 //		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, 0);
 //	  }
 
-	  showFullNumber(4321);
+	  showFullNumber(2538);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -215,7 +250,7 @@ static void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 999;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 999;
+  htim6.Init.Period = 30;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
@@ -334,35 +369,11 @@ void showNumber(char num)
 
 void showFullNumber(int num)
 {
-	RAZR_1_OFF;
 
-	int num_4, num_3, num_2, num_1 = 0;
 	num_4 = num / 1000;
 	num_3 = num % 1000 / 100;
 	num_2 = num % 100 /10;
 	num_1 = num % 10;
-
-	showNumber(num_4);
-	RAZR_1_OFF;
-	RAZR_4_ON;
-	HAL_Delay(TIME_DELAY);
-
-	showNumber(num_3);
-	RAZR_4_OFF;
-	RAZR_3_ON;
-	HAL_Delay(TIME_DELAY);
-
-	showNumber(num_2);
-	RAZR_3_OFF;
-	RAZR_2_ON;
-	HAL_Delay(TIME_DELAY);
-
-	showNumber(num_1);
-	RAZR_2_OFF;
-	RAZR_1_ON;
-	HAL_Delay(TIME_DELAY);
-
-
 
 }
 /* USER CODE END 4 */
