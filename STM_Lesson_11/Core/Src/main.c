@@ -60,6 +60,7 @@
 
 volatile uint8_t count = 0;
 int num_4, num_3, num_2, num_1 = 0;
+float numberToShow = 0;
 
 /* USER CODE END PD */
 
@@ -80,7 +81,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM6_Init(void);
 /* USER CODE BEGIN PFP */
-void showNumber(char num);
+void showNumber(int num);
 void showFullNumber(int num);
 void showFloatNumber(float num);
 
@@ -174,17 +175,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  numberToShow = -0.899;
+	  showFloatNumber(numberToShow);
 
-//	  if (__HAL_TIM_GET_COUNTER(&htim6) == 4000)
-//	  {
-//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, 1);
-//	  }
-//	  if (__HAL_TIM_GET_COUNTER(&htim6) == 7999)
-//	  {
-//		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, 0);
-//	  }
-
-	  showFloatNumber(0.88999);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -352,9 +345,10 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void showNumber(char num)
+void showNumber(int num)
 {
 	switch (num) {
+	case -1: SEG_A_0; SEG_B_0; SEG_C_0; SEG_D_0; SEG_E_0; SEG_F_0; SEG_G_1; break;
 	case 0: SEG_A_1; SEG_B_1; SEG_C_1; SEG_D_1; SEG_E_1; SEG_F_1; SEG_G_0; break;
 	case 1:	SEG_A_0; SEG_B_1; SEG_C_1; SEG_D_0; SEG_E_0; SEG_F_0; SEG_G_0; break;
 	case 2:	SEG_A_1; SEG_B_1; SEG_C_0; SEG_D_1;	SEG_E_1; SEG_F_0; SEG_G_1; break;
@@ -367,6 +361,7 @@ void showNumber(char num)
 	case 9: SEG_A_1; SEG_B_1; SEG_C_1; SEG_D_1; SEG_E_0; SEG_F_1; SEG_G_1; break;
 	default: SEG_A_1; SEG_B_0; SEG_C_0; SEG_D_1; SEG_E_1; SEG_F_1; SEG_G_1;
 	}
+
 }
 
 void showFullNumber(int num)
@@ -387,8 +382,15 @@ void showFloatNumber(float num)
  * Function split float number to 4 digits
  */
 
-
+	int sign = 0;
 	// TODO Add DOT to show correct number. Current display is not support dots.
+
+	if (num < 0)
+	{
+		num *= -1;
+		sign = 1;
+//		num = num / 100;
+	}
 
 	if (num >= 1000)
 	{
@@ -409,11 +411,21 @@ void showFloatNumber(float num)
 
 	int num_int = lrint(num);  // Function to math round value
 
+	if (sign == 0)
+	{
+		num_4 = num_int / 1000;
+		num_3 = num_int % 1000 / 100;
+		num_2 = num_int % 100 /10;
+		num_1 = num_int % 10;
+	}
+	else
+	{
+		num_4 = -1;
+		num_3 = num_int / 1000;
+		num_2 = num_int % 1000 / 100;
+		num_1 = num_int % 100 /10;
+	}
 
-	num_4 = num_int / 1000;
-	num_3 = num_int % 1000 / 100;
-	num_2 = num_int % 100 /10;
-	num_1 = num_int % 10;
 
 }
 
