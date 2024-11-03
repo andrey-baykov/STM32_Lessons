@@ -19,9 +19,10 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "math.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -81,6 +82,7 @@ static void MX_TIM6_Init(void);
 /* USER CODE BEGIN PFP */
 void showNumber(char num);
 void showFullNumber(int num);
+void showFloatNumber(float num);
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 {
@@ -182,7 +184,7 @@ int main(void)
 //		  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, 0);
 //	  }
 
-	  showFullNumber(2538);
+	  showFloatNumber(0.88999);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -369,13 +371,52 @@ void showNumber(char num)
 
 void showFullNumber(int num)
 {
-
+/*
+ * Function split integer number to 4 digits
+ */
 	num_4 = num / 1000;
 	num_3 = num % 1000 / 100;
 	num_2 = num % 100 /10;
 	num_1 = num % 10;
 
 }
+
+void showFloatNumber(float num)
+{
+/*
+ * Function split float number to 4 digits
+ */
+
+
+	// TODO Add DOT to show correct number. Current display is not support dots.
+
+	if (num >= 1000)
+	{
+		num *= 1;
+	}
+	else if (num >= 100 && num < 1000)
+	{
+		num *= 10;
+	}
+	else if (num >= 10 && num < 100)
+	{
+		num *= 100;
+	}
+	else if (num >= 0 && num < 10)
+	{
+		num *= 1000;
+	}
+
+	int num_int = lrint(num);  // Function to math round value
+
+
+	num_4 = num_int / 1000;
+	num_3 = num_int % 1000 / 100;
+	num_2 = num_int % 100 /10;
+	num_1 = num_int % 10;
+
+}
+
 /* USER CODE END 4 */
 
 /**
